@@ -1,0 +1,55 @@
+{%extends 'basic.html'%}
+
+
+{%block body%}
+<div class='container mt-2'>
+<form action='contact' method="post" class="row g-3">{% csrf_token %}
+  <div class="col-md-6">
+    <label for="inputname" class="form-label">Name</label>
+    <input type="text" class="form-control" name="name" id="inputname" Required>
+  </div>
+    <div class="col-md-6">
+      <label for="contactEmail" class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" id="contactEmail" Required>
+    </div>
+    <div class="col-12">
+      <label for="inputphonenumber" class="form-label">Phone</label>
+      <input type="tel" class="form-control" name='phone' id="inputphonenumber" placeholder="9123456789" Required>
+    </div>
+    <div class="col-12">
+      <label for="inputAddress" class="form-label">Address(optional)</label>
+      <input type="text" class="form-control" name='address' id="inputAddress" placeholder="Apartment, studio, or floor">
+    </div>
+    <div class="col-md-6">
+      <label for="inputCity" class="form-label">City</label>
+      <input type="text" class="form-control" name='city' id="inputCity" Required>
+    </div>
+    <div class="col-md-4">
+      <label for="inputState" class="form-label">State</label>
+      <select id="inputState" name='state' class="form-select" Required>
+        <option selected>Choose...</option>
+        <option>Assam</option>
+        <option>Bihar</option>
+        <option>Bombay</option>
+        <option>East Punjab</option>
+        <option>Madhya Pradesh</option>
+        <option>Madras</option>
+        <option>Orissa</option>
+        <option>Uttar Pradesh</option>
+        <option>West Bengal</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="inputZip" class="form-label">Zip</label>
+      <input type="text" class="form-control" name='pincode' id="inputZip" Required>
+    </div>
+    <div class="mb-3">
+      <label for="Textarea" class="form-label">Enter Your Problem Briefly!</label>
+      <textarea class="form-control" name="text" id="Textarea" rows="3"></textarea>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+{%endblock%}

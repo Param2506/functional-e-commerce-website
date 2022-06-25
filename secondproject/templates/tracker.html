@@ -1,0 +1,66 @@
+{% extends 'basic.html' %}
+
+{%block body%}
+<div class="text-center mt-5 fw-bolder"  style="font-family: 'Raleway', sans-serif;">
+    <p>Enter Details to Track your order<p>
+  </div>
+<div class='container mt-2 mb-5' >
+  <form action="#" id="trackerform" method="post" class="row g-3">{% csrf_token %}
+    <input type="hidden" name="jsonitems" id="jsonitems">
+    <div class="col-md-6">
+      <label for="orderid" class="form-label">Order Id</label>
+      <input type="text" class="form-control" name="orderid" id="orderid" Required>
+    </div>
+    <div class="col-md-6">
+        <label for="contactEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" id="email" Required>
+    </div>
+    <div class="col-12">
+        <button id="track" type="submit" class="btn btn-primary">Track</button>
+    </div>
+<form>
+</div>
+
+<div class="text-center mt-3 fw-bolder"  style="font-family: 'Raleway', sans-serif;">
+    <p>Current status of your order<p>
+  </div>
+<div id="items" class="accordion m-auto w-75" id="accordionExample">
+
+</div>
+     
+{%endblock%}
+
+{% block js %}
+<script>
+$("#track").on("submit",function(event){
+        let formdata = {
+            'orderid' : $('input[name=orderid]').val(),
+            'email' : $('input[name=email]').val(),
+            'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "/home/tracker/",
+            data: formdata,
+            encode: true
+        })
+
+            .done(function(data){
+                updates = JSON.parse(data);
+                for (i=0; i<updates.length; i++){
+                    text = updates[i]['text'];
+                    time = updates[i]['timestamp'];
+                    mystr = `<ul class="list-group w-75 m-auto">
+                        <li class="list-group-item fw-bolder">${text}
+                        <span class="badge badge-primary badge-pill">${time}</span>
+                        </li>
+                    </ul>`
+                    $("items").append(mystr);
+            };
+
+        })
+        event.preventDefault();
+})
+</script>
+{%endblock%}

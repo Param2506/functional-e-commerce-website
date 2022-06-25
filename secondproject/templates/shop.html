@@ -1,0 +1,86 @@
+{%extends "basic.html" %}
+  {%block body%}
+  {%for prod ,range in allproducts%}
+  <div class="title d-flex justify-content-center" style="margin-top: 90px; width: 30vw;">
+    <h4>{{prod.0.Category}}</h4>
+  </div>
+  <div id="itempreview" class="d-flex justify-content-center flex-wrap carousel slide">
+    {% for i in prod %}
+    <div class="card" style="width: 15vw; max-height:42vh;">
+      <img id="imagepr{{i.id}}" src="/media/{{i.product_image}}" class="card-img-top" alt="Loading..." style="margin: auto; width:15vw; height:135px;">
+      <div class="d-flex align-items-center flex-column mb-0">
+        <h5 id="namepr{{i.id}}"  class="card-text">{{i.product_name}}</h5>
+        <p id="pricepr{{i.id}}" class="card-text mb-0"><b>Rs.{{i.price}}</b></p>
+        <p class="card-text" style="font-family: 'Raleway', sans-serif;"><span class="badge rounded-pill text-bg-secondary">Added on: {{i.pub_date}}</span></p>
+      </div>
+      <div class="card-body d-flex justify-content-center">
+        <button class="card-link btn btn-primary m-0 mx-1 tocheckout text-nowrap" style="width:85px ; height:40px; font-family: 'Raleway', sans-serif;">Buy Now</button>
+        <span id="spr{{i.id}}" class="divpr">
+        <button id="pr{{i.id}}" class="btn btn-primary m-0 cart text-nowrap" style="width:102px ; height:40px; font-family: 'Raleway', sans-serif;">Add To Cart</button>
+        </span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {%endfor%}
+  {%endblock%}
+
+  {%block js%}
+  <script>
+    console.log("working");
+      if(localStorage.getItem('cart') == null){
+        var cart={};
+        }
+      else
+        {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        updatecart(cart);
+        }
+      $('.divpr').on("click", "button.cart", function(){
+        let idstr = this.id.toString();
+        if (cart[idstr] != undefined){
+          qty = cart[idstr][0]+1;
+        }
+        else
+        {
+          qty = 1;
+          name = document.getElementById("name"+idstr).innerHTML;
+          cart[idstr] = [qty, name];
+        }
+        updatecart(cart);
+      });
+    
+       $('#clearcart').click(function(){
+        cart = JSON.parse(localStorage.getItem("cart"));
+          for (var item in cart){
+            document.getElementById("s"+item).innerHTML = `<button id="${item}" class="btn btn-primary m-0 cart text-nowrap" style="width:102px ; height:40px ;">Add To Cart</button>`
+          }
+          localStorage.clear();
+          cart = {};
+          updatecart(cart);
+        })
+    
+        function updatecart(cart){
+          let total = 0;
+          for (var item in cart){
+            total = total + cart[item][0];
+            document.getElementById("s"+item).innerHTML = `<button id="minus${item}" class="btn btn-primary minus">-</button><span id="${item}">${cart[item][0]}</span><button id="plus${item}" class="btn btn-primary plus">+</button>`
+          }
+          localStorage.setItem("cart", JSON.stringify(cart));
+          document.getElementById('innercart').innerHTML = total;
+        }
+        $(".divpr").on("click", "button.plus", function(){
+            a=this.id.slice(4,);
+            cart[a][0] = cart[a][0] + 1;
+            document.getElementById(a).innerHTML = cart[a][0];
+            updatecart(cart);
+        });
+        $(".divpr").on("click", "button.minus", function(){
+            a=this.id.slice(5,);
+            cart[a][0] = cart[a][0] - 1;
+            cart[a][0] = Math.max(0,cart[a][0])
+            document.getElementById(a).innerHTML = cart[a][0];
+            updatecart(cart);
+        });
+      </script>    
+  {%endblock%}

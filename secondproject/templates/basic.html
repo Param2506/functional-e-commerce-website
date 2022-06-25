@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>Welcome to Supremity</title>
+    <link rel="icon" type="image/x-icon" href="https://1.bp.blogspot.com/-WIJLyK87pT0/XsPDDZyhDPI/AAAAAAAAD54/3swww5c_tkIcvSoLVLUCK7TA5onrS49GgCLcBGAsYHQ/s1600/%255BNew%255D%2BLetter%2BS%2BName%2BDp%2BPic%252C%2BImages%252C%2BWallpaper%252C%2BPhotos%2B%255B2020%255D%2B%252816%2529.jpg">
+    <style>
+      .nav-item{
+        border-radius: 10px;
+      }
+      .nav-item:hover{
+        text-shadow: 2px 2px black;
+        background-color: rgb(247, 124, 124);
+      }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,100&display=swap" rel="stylesheet">
+    {%block css%} {%endblock%}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-white" href="http://127.0.0.1:8000/">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active text-white" aria-current="page" href="/home">ShopHome</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/home/contact">Contact</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+              </a>
+              <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item text-white" href="/home/fashion">Fashion</a></li>
+                <li><a class="dropdown-item text-white" href="/home/electronics">Electronics</a></li>
+                <li><a class="dropdown-item text-white" href="/home/stationary">Stationary</a></li>
+                <li><hr class="dropdown-divider text-white"></li>
+                <li><a class="dropdown-item text-white" href="#">Other products</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href='/home/checkout'>Cart(<span id='innercart'>0</span>)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href='/home/tracker'>Tracker</a>
+            </li>
+            <li class="nav-item">
+              <button id="clearcart" class="btn btn-outline-danger text-nowrap border-0 mt-1" href=''>Clear Cart</button>
+            </li>
+          </ul>
+          <form action='/home/search' method='get' class="d-flex text-black" role="search" style='padding-left: 32vw;'>
+            <input class="form-control me-2 text-black" type="search" name='query' id='query' placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-danger" type="submit" style='margin-right: 8px;'>Search</button>
+          </form>
+          {%if user.is_authenticated%}
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                WELCOME {{request.user}}
+              </a>
+              <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item text-white" href="/home/logout">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+          {%else%}
+            <!-- Button trigger signupmodal -->
+          <button type="button" class="btn btn-outline-danger text-nowrap m-1" data-bs-toggle="modal" data-bs-target="#SignupModal">
+          SignUP
+          </button>
+           <!-- Button trigger login modal -->
+          <button type="button" class="btn btn-outline-danger text-nowrap m-1" data-bs-toggle="modal" data-bs-target="#loginModal">
+          Login
+          </button>
+          {%endif%}
+        </div>
+      </div>
+    </nav>
+    {%for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+      <strong>{{message}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {%endfor%}
+
+<!-- signupModal -->
+<div class="modal fade" id="SignupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sign UP!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/home/signup/" method="post" class="row g-3">{% csrf_token %}
+          <div class="col-12">
+            <label for="inputusername" class="form-label">UserName</label>
+            <input type="text" class="form-control" name="username" id="inputusername" Required maxlength=10>
+          </div>
+          <div class="col-md-6">
+            <label for="inputfname" class="form-label">First Name</label>
+            <input type="text" class="form-control" name="fname" id="inputfname" Required minlength=4>
+          </div>
+          <div class="col-md-6">
+            <label for="inputlname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="lname" id="inputlname" Required >
+          </div>
+          <div class="col-12">
+              <label for="inputEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" id="inputEmail" Required>
+              <a href=""><small>verify email id</small></a>
+          </div>
+          <div class="col-12">
+            <label for="inputlname" class="form-label">Phone</label>
+            <input type="tel" class="form-control" name="phone" id="phone" Required >
+          </div>
+          <div class="col-md-6">
+              <label for="inputPass1" class="form-label">Password</label>
+              <input type="password" class="form-control" name='pass1' id="inputPass1" Required>
+          </div>
+          <div class="col-md-6">
+              <label for="inputPass2" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" name='pass2' id="inputPass2" Required>
+          </div>
+          <div class="modal-footer">
+          <button type="Submit" class="btn btn-outline-danger">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- loginModal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/home/login/" method="post" class="row g-3">{% csrf_token %}
+          <div class="col-12">
+              <label for="loginusername" class="form-label">UserName</label>
+              <input type="text" class="form-control" name="loginusername" id="loginusername" Required>
+          </div>
+          <div class="col-12">
+              <label for="inputPass1" class="form-label">Password</label>
+              <input type="password" class="form-control" name='loginpass' id="loginPass1" Required>
+          </div>
+          <div class="modal-footer">
+          <button type="Submit" class="btn btn-outline-danger">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  {% block body %} {% endblock %}
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+<script>
+    $(".tocheckout").click(function(){
+    });
+</script>
+
+ {%block js%} {%endblock%}
+  </body>
+</html>
+
+
+
