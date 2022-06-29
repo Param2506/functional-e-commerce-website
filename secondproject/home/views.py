@@ -7,9 +7,19 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
+from datetime import *
 import json
 # Create your views here.
-def shophome(request):
+def home(request):
+    messages.success(request, 'Sale is live now! Checkout our New Arrivals!')
+    dateset = date(2022,6,16)
+    print(dateset)
+    items=Product.objects.filter(pub_date__gte=dateset)
+    params = {"items": items}
+    return render(request , 'index.html', params)
+
+
+def shop(request):
     allprods = []
     catprods = Product.objects.values('Category')
     cats = {item['Category'] for item in catprods}
@@ -166,7 +176,8 @@ def tracker(request):
                     response = json.dumps(updates, default=str)
                 return HttpResponse(response)
             else:
-                return HttpResponse("error")
+                messages.error(request, "There is no matching id and email of this sort. Please try again with correct entries")
+                return redirect ("/tracker/")
         except Exception as e:
             return HttpResponse(f"exception{e}")
 

@@ -5,7 +5,7 @@
     <p>Enter Details to Track your order<p>
   </div>
 <div class='container mt-2 mb-5' >
-  <form action="#" id="trackerform" method="post" class="row g-3">{% csrf_token %}
+  <form id="trackerform" method="post" class="row g-3">{% csrf_token %}
     <input type="hidden" name="jsonitems" id="jsonitems">
     <div class="col-md-6">
       <label for="orderid" class="form-label">Order Id</label>
@@ -32,7 +32,8 @@
 
 {% block js %}
 <script>
-$("#track").on("submit",function(event){
+    $("#track").on("submit",function(event){
+        event.preventDefault();
         let formdata = {
             'orderid' : $('input[name=orderid]').val(),
             'email' : $('input[name=email]').val(),
@@ -41,7 +42,7 @@ $("#track").on("submit",function(event){
         
         $.ajax({
             type: "POST",
-            url: "/home/tracker/",
+            url: "/tracker/",
             data: formdata,
             encode: true
         })
@@ -60,7 +61,6 @@ $("#track").on("submit",function(event){
             };
 
         })
-        event.preventDefault();
 })
 </script>
 {%endblock%}

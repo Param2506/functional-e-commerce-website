@@ -15,7 +15,7 @@
     <p>Enter Details to checkout<p>
   </div>
 <div class='container mt-2 mb-5' >
-  <form action='/home/checkout/' method="post" class="row g-3">{% csrf_token %}
+  <form action='/checkout/' method="post" class="row g-3">{% csrf_token %}
     <input type="hidden" name="jsonitems" id="jsonitems">
     {% if user.is_authenticated%}
     <div class="col-md-6">
@@ -27,6 +27,7 @@
         <input type="email" class="form-control" value='{{request.user.email}}' name="email" id="contactEmail" Required>
       </div>
       {%else%}
+    <div>
       <label for="inputname" class="form-label">Name</label>
       <input type="text" class="form-control" name="name" id="inputname" Required>
     </div>
@@ -124,7 +125,7 @@ $("#jsonitems").val(JSON.stringify(cart))
 {%if thank%}
 alert("Your order has been placed. Your order id is {{id}}");
 localStorage.clear();
-document.location = "/home";
+document.location = "/shop";
 {%endif%}
 </script>
 {%endblock%}

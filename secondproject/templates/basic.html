@@ -32,34 +32,34 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active text-white" aria-current="page" href="/home">ShopHome</a>
+              <a class="nav-link active text-white" aria-current="page" href="/shop">Shop</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="/home/contact">Contact</a>
+              <a class="nav-link text-white" href="/contact">Contact</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Categories
               </a>
               <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item text-white" href="/home/fashion">Fashion</a></li>
-                <li><a class="dropdown-item text-white" href="/home/electronics">Electronics</a></li>
-                <li><a class="dropdown-item text-white" href="/home/stationary">Stationary</a></li>
+                <li><a class="dropdown-item text-white" href="/fashion">Fashion</a></li>
+                <li><a class="dropdown-item text-white" href="/electronics">Electronics</a></li>
+                <li><a class="dropdown-item text-white" href="/stationary">Stationary</a></li>
                 <li><hr class="dropdown-divider text-white"></li>
                 <li><a class="dropdown-item text-white" href="#">Other products</a></li>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href='/home/checkout'>Cart(<span id='innercart'>0</span>)</a>
+              <a class="nav-link text-white" href='/checkout'>Cart(<span id='innercart'>0</span>)</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href='/home/tracker'>Tracker</a>
+              <a class="nav-link text-white" href='/tracker'>Tracker</a>
             </li>
             <li class="nav-item">
               <button id="clearcart" class="btn btn-outline-danger text-nowrap border-0 mt-1" href=''>Clear Cart</button>
             </li>
           </ul>
-          <form action='/home/search' method='get' class="d-flex text-black" role="search" style='padding-left: 32vw;'>
+          <form action='/search' method='get' class="d-flex text-black" role="search" style='padding-left: 32vw;'>
             <input class="form-control me-2 text-black" type="search" name='query' id='query' placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-danger" type="submit" style='margin-right: 8px;'>Search</button>
           </form>
@@ -70,7 +70,7 @@
                 WELCOME {{request.user}}
               </a>
               <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item text-white" href="/home/logout">Logout</a></li>
+                <li><a class="dropdown-item text-white" href="/logout">Logout</a></li>
               </ul>
             </li>
           </ul>
@@ -103,7 +103,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="/home/signup/" method="post" class="row g-3">{% csrf_token %}
+        <form action="/signup/" method="post" class="row g-3">{% csrf_token %}
           <div class="col-12">
             <label for="inputusername" class="form-label">UserName</label>
             <input type="text" class="form-control" name="username" id="inputusername" Required maxlength=10>
@@ -151,7 +151,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="/home/login/" method="post" class="row g-3">{% csrf_token %}
+        <form action="/login/" method="post" class="row g-3">{% csrf_token %}
           <div class="col-12">
               <label for="loginusername" class="form-label">UserName</label>
               <input type="text" class="form-control" name="loginusername" id="loginusername" Required>
