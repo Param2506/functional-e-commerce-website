@@ -11,6 +11,23 @@
     <title>Welcome to Supremity</title>
     <link rel="icon" type="image/x-icon" href="https://1.bp.blogspot.com/-WIJLyK87pT0/XsPDDZyhDPI/AAAAAAAAD54/3swww5c_tkIcvSoLVLUCK7TA5onrS49GgCLcBGAsYHQ/s1600/%255BNew%255D%2BLetter%2BS%2BName%2BDp%2BPic%252C%2BImages%252C%2BWallpaper%252C%2BPhotos%2B%255B2020%255D%2B%252816%2529.jpg">
     <style>
+      *{
+        font-family: 'Lobster', cursive;
+        text-shadow: 1px 1px 2px black;
+      }
+      .message{
+        text-shadow: 1px 1px white;
+      }
+      body::before{
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 130%;
+        top:0;
+        left: 0;
+        background: url("https://img.freepik.com/free-vector/abstract-blue-geometric-shapes-background_1035-17545.jpg?w=2000") no-repeat center center/cover;
+        z-index: -1;
+      }
       .nav-item{
         border-radius: 10px;
       }
@@ -20,10 +37,12 @@
       }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
     {%block css%} {%endblock%}
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-dark">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand text-white" href="http://127.0.0.1:8000/">Supremes</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +78,7 @@
               <button id="clearcart" class="btn btn-outline-danger text-nowrap border-0 mt-1" href=''>Clear Cart</button>
             </li>
           </ul>
-          <form action='/search' method='get' class="d-flex text-black" role="search" style='padding-left: 32vw;'>
+          <form action='/search' method='get' class="d-flex text-black" role="search" style='padding-left: 19vw;'>
             <input class="form-control me-2 text-black" type="search" name='query' id='query' placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-danger" type="submit" style='margin-right: 8px;'>Search</button>
           </form>
@@ -89,7 +108,7 @@
     </nav>
     {%for message in messages %}
     <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-      <strong>{{message}}</strong>
+      <strong class="message">{{message}}</strong>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {%endfor%}
@@ -168,8 +187,11 @@
     </div>
   </div>
 </div>
+<body>
+  <header>{%block header%}{% endblock %}</header>
   {% block body %} {% endblock %}
 
+</body>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script
